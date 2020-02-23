@@ -32,10 +32,12 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.usuario).subscribe(r => {
       console.log(r);
-      console.log(JSON.parse(atob(r.access_token.split('.')[1])));
-      const payload = JSON.parse(atob(r.access_token.split('.')[1]));
+      // para gaurdar los datos usar metodo del service authservice
+        this.authService.guardarUsuario(r.access_token);
+        this.authService.guardarToken(r.access_token);
+        const usuario = this.authService.usuario;
       this.router.navigate(['/clientes']);
-      swal('Login', `Hola ${payload.user_name}, has iniciado sesión con éxito`, 'success');
+      swal('Login', `Hola ${usuario.username}, has iniciado sesión con éxito`, 'success');
     });
   }
 
