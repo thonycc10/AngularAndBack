@@ -70,4 +70,12 @@ export class AuthService {
       return null;
     }
   }
+
+  isAuthenticated(): boolean {
+    const payload = this.obtenerDatosToken(this.token);
+    if (payload != null && payload.user_name && payload.user_name.length > 0) {
+      return true;
+    }
+    return false;
+  }
 }
