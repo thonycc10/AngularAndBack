@@ -7,6 +7,7 @@ import swal from 'sweetalert2';
 import {Router} from '@angular/router';
 import {DatePipe, formatDate} from '@angular/common';
 import {Region} from './region';
+import {AuthService} from '../usuarios/auth.service';
 
 @Injectable()
 export class ClienteService {
@@ -20,13 +21,24 @@ export class ClienteService {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private authService: AuthService
   ) { }
 
   private isNotAuthorization(e): boolean {
-    if (e.status == 401 || e.status == 403) {
+    if (e.status == 401) {
+      if (this.authService.isAuthenticated()) {
+        this.authService.logout();
+      }
       this.router.navigate(['/login']);
       return true;
     }
+
+    if (e.status == 403) {
+      swal('Acceso denegado', `Hola ${this.authService.usuario.username} no tienes acceso a este recurso`, 'warning');
+      this.router.navigate(['/clientes']);
+      return true;
+    }
+
     return false;
   }
 
