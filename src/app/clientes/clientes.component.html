@@ -12,7 +12,8 @@
     <table class="table table-bordered table-striped" *ngIf="clientes?.length>0">
       <thead>
         <tr>
-          <th *ngIf="authService.hasRole('ROLE_USER')">id</th>
+<!--          *ngIf="authService.hasRole('ROLE_USER')"-->
+          <th >id</th>
           <th>Nombre</th>
           <th>Apellido</th>
           <th>Correo</th>
@@ -23,7 +24,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let cliente of clientes">
-          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+          <td>
             <img style="width: 64px; cursor: pointer" (click)="abrirModal(cliente)" *ngIf="cliente?.foto" src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" class="img-thumbnail rounded" alt="{{cliente.foto}}">
             <!--https://www.iconfinder.com/ para bajar iconos cheveres-->
             <img style="width: 64px; cursor: pointer" (click)="abrirModal(cliente)" *ngIf="!cliente?.foto" src="http://localhost:8080/imgen/notUser.png" class="img-thumbnail rounded" alt="Sin foto">
