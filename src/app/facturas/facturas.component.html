@@ -40,7 +40,7 @@
                  matInput
                  [formControl]="autocompleteControl"
                  [matAutocomplete]="auto">
-          <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarNombre">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarNombre" (optionSelected)="seleccionProducto($event)">
             <mat-option *ngFor="let producto of productosFiltrados | async" [value]="producto">
               {{producto.nombre}}
             </mat-option>
@@ -48,6 +48,25 @@
         </mat-form-field>
       </div>
     </div>
+
+    <table class="table table-striped table-hover table-sm">
+      <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Total</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of factura.itemFacturaList">
+        <td>{{item.producto.nombre}}</td>
+        <td>{{item.producto.precio}}</td>
+        <td><input type="number" value="{{item.cantidad}}" class="form-control col-sm-4" (change)="actualizarCantidad(item.producto.id, $event)"></td>
+        <td>{{item.calcularImporte()}}</td>
+      </tr>
+      </tbody>
+    </table>
 
     <div class="form-group row">
       <div class="col-sm-6">
