@@ -67,6 +67,9 @@ export class FacturasComponent implements OnInit {
   actualizarCantidad(id: number, event: any): void {
     const cantidad: number = event.target.value as number;
     // map se usa para modificar
+    if (cantidad == 0) {
+        return this.eliminarItemFactura(id);
+    }
     this.factura.itemFacturaList = this.factura.itemFacturaList.map((item: ItemFactura) => {
       if (id === item.producto.id) {
         item.cantidad = cantidad;
@@ -92,6 +95,10 @@ export class FacturasComponent implements OnInit {
       }
       return  item;
     });
+  }
+
+  eliminarItemFactura(id: number): void {
+    this.factura.itemFacturaList = this.factura.itemFacturaList.filter((item: ItemFactura) => id !== item.producto.id);
   }
 
 }
